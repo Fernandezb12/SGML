@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SGML | Panel Operativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body[data-theme='dark'] {
+        background: radial-gradient(circle at 20% 20%, #071e26, #01070f);
+        color: #f8fbff;
+      }
+      body[data-theme='dark'] .card {
+        background: rgba(14, 35, 45, 0.92);
+        box-shadow: none;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      body[data-theme='dark'] .navbar {
+        background: rgba(14, 35, 45, 0.9);
+      }
+      body[data-theme='dark'] .table {
+        background: rgba(14, 35, 45, 0.92);
+      }
+      body[data-theme='dark'] .table thead {
+        background: rgba(0, 104, 55, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container" style="padding: 2.5rem 0 3.5rem">
+      <header class="header">
+        <div class="brand">
+          <div class="brand__logo">USCO</div>
+          <div>
+            <p class="brand__title">SGML · Panel Operativo</p>
+            <p style="margin: 0; color: var(--color-text-muted)">Seguimiento integral a tickets correctivos y preventivos</p>
+          </div>
+        </div>
+        <nav class="navbar">
+          <div class="nav-tabs">
+            <button class="active" data-link="index.html">Dashboard</button>
+            <button data-link="tickets.html">Tickets</button>
+          </div>
+          <div class="navbar__actions">
+            <div class="navbar__user">
+              <strong id="user-name">Usuario</strong>
+              <span id="user-role" style="color: var(--color-text-muted); font-size: 0.85rem"></span>
+            </div>
+            <button class="button button--ghost" id="theme-toggle">🌙 Modo oscuro</button>
+            <button class="button button--ghost" id="logout-button">Cerrar sesión</button>
+          </div>
+        </nav>
+      </header>
+
+      <section class="grid grid--3" id="kpi-grid">
+        <article class="card kpi">
+          <span class="kpi__subtitle">Tickets activos</span>
+          <span class="kpi__value" id="kpi-activos">0</span>
+          <p style="margin: 0; color: var(--color-text-muted)">Suma de tickets en validación, asignados o en ejecución.</p>
+        </article>
+        <article class="card kpi">
+          <span class="kpi__subtitle">Preventivos al día</span>
+          <span class="kpi__value" id="kpi-preventivos">0</span>
+          <p style="margin: 0; color: var(--color-text-muted)">Órdenes preventivas atendidas dentro del cronograma.</p>
+        </article>
+        <article class="card kpi">
+          <span class="kpi__subtitle">Tiempo medio de cierre</span>
+          <span class="kpi__value" id="kpi-tiempo">0h</span>
+          <p style="margin: 0; color: var(--color-text-muted)">Promedio de horas entre inicio y cierre.</p>
+        </article>
+      </section>
+
+      <section class="grid" style="margin-top: 2.5rem">
+        <div class="card">
+          <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+            <div>
+              <h2 style="margin: 0">Estado de tickets</h2>
+              <p style="margin: 0.25rem 0 0; color: var(--color-text-muted)">Distribución por estado actual</p>
+            </div>
+            <span class="badge" id="total-tickets">0 tickets</span>
+          </header>
+          <canvas id="chart-estados" height="220"></canvas>
+        </div>
+        <div class="card">
+          <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+            <div>
+              <h2 style="margin: 0">Backlog crítico</h2>
+              <p style="margin: 0.25rem 0 0; color: var(--color-text-muted)">Órdenes atrasadas por prioridad</p>
+            </div>
+            <button class="button button--ghost" id="refresh-backlog">Actualizar</button>
+          </header>
+          <div id="backlog-grid" class="grid grid--2"></div>
+        </div>
+      </section>
+
+      <section class="grid" style="margin-top: 2.5rem">
+        <div class="card">
+          <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <div>
+              <h2 style="margin: 0">Productividad por operario</h2>
+              <p style="margin: 0.25rem 0 0; color: var(--color-text-muted)">Comparativo de tickets atendidos</p>
+            </div>
+            <button class="button button--ghost" id="refresh-productividad">Refrescar</button>
+          </header>
+          <table class="table" id="tabla-productividad">
+            <thead>
+              <tr>
+                <th>Operario</th>
+                <th>Total</th>
+                <th>Cerrados</th>
+                <th>En curso</th>
+                <th>Preventivos</th>
+                <th>Correctivos</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <div>
+              <h2 style="margin: 0">Preventivos programados</h2>
+              <p style="margin: 0.25rem 0 0; color: var(--color-text-muted)">Checklist y programaciones futuras</p>
+            </div>
+          </header>
+          <div class="timeline" id="preventivos-timeline"></div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module">
+      import { auth } from './assets/js/auth.js';
+      import { api } from './assets/js/api.js';
+      import { initThemeToggle } from './assets/js/theme.js';
+      import { state } from './assets/js/state.js';
+      import { renderBacklog, renderPreventivos } from './assets/js/ui.js';
+      import { buildDonut } from './assets/js/charts.js';
+
+      auth.requireAuth();
+
+      const user = auth.getUser();
+      document.getElementById('user-name').textContent = user?.nombre ?? 'Invitado';
+      document.getElementById('user-role').textContent = user?.rol ?? '';
+
+      const themeToggle = document.getElementById('theme-toggle');
+      initThemeToggle(themeToggle);
+
+      document.getElementById('logout-button').addEventListener('click', async () => {
+        await auth.logout();
+        window.location.href = './login.html';
+      });
+
+      document.querySelectorAll('.nav-tabs button').forEach((button) => {
+        button.addEventListener('click', () => {
+          const link = button.getAttribute('data-link');
+          if (link && !button.classList.contains('active')) {
+            window.location.href = `./${link}`;
+          }
+        });
+      });
+
+      let chartEstados;
+      let demoBannerMostrado = false;
+
+      const fallbackDataset = {
+        operativo: {
+          total: 18,
+          promedioHoras: 14.6,
+          resumen: [
+            { estado: 'nuevo', cantidad: 2 },
+            { estado: 'en validacion', cantidad: 3 },
+            { estado: 'asignado', cantidad: 4 },
+            { estado: 'en ejecucion', cantidad: 3 },
+            { estado: 'en espera', cantidad: 1 },
+            { estado: 'solucionado', cantidad: 3 },
+            { estado: 'cerrado', cantidad: 1 },
+            { estado: 'reabierto', cantidad: 1 },
+          ],
+        },
+        backlog: {
+          backlog: [
+            {
+              id: 'demo-001',
+              numero: 'TCK-DEMO-001',
+              prioridad: 'critica',
+              estado: 'en ejecucion',
+              fechaProgramada: '2024-11-05T08:00:00.000Z',
+              diasRetraso: 4,
+            },
+            {
+              id: 'demo-002',
+              numero: 'TCK-DEMO-002',
+              prioridad: 'alta',
+              estado: 'en espera',
+              fechaProgramada: '2024-11-07T14:00:00.000Z',
+              diasRetraso: 2,
+            },
+          ],
+        },
+        preventivos: {
+          resumen: { total: 5, cerrados: 3, enCurso: 1 },
+          preventivos: [
+            {
+              id: 'prev-001',
+              numero: 'PRV-DEMO-001',
+              descripcion: 'Inspección trimestral de luminarias en Bloque C',
+              prioridad: 'media',
+              estado: 'en ejecucion',
+              asignacion: { fechaProgramada: '2024-11-10T09:00:00.000Z' },
+            },
+            {
+              id: 'prev-002',
+              numero: 'PRV-DEMO-002',
+              descripcion: 'Mantenimiento preventivo aire acondicionado Biblioteca',
+              prioridad: 'alta',
+              estado: 'asignado',
+              asignacion: { fechaProgramada: '2024-11-12T14:00:00.000Z' },
+            },
+            {
+              id: 'prev-003',
+              numero: 'PRV-DEMO-003',
+              descripcion: 'Verificación anual de tableros eléctricos',
+              prioridad: 'critica',
+              estado: 'cerrado',
+              asignacion: { fechaProgramada: '2024-10-28T08:00:00.000Z' },
+            },
+          ],
+        },
+        productividad: {
+          productividad: [
+            { operarioId: 'OP-101', total: 6, cerrados: 3, enCurso: 2, preventivos: 2, correctivos: 4 },
+            { operarioId: 'OP-205', total: 5, cerrados: 2, enCurso: 2, preventivos: 1, correctivos: 4 },
+            { operarioId: 'OP-317', total: 4, cerrados: 1, enCurso: 2, preventivos: 1, correctivos: 3 },
+          ],
+        },
+      };
+
+      function mostrarBannerDemo() {
+        if (demoBannerMostrado) return;
+        const container = document.querySelector('main.container');
+        const header = container?.querySelector('.header');
+        if (!container || !header) return;
+
+        const banner = document.createElement('div');
+        banner.setAttribute('role', 'status');
+        banner.style.cssText = 'margin: 1rem 0 2rem; padding: 1rem 1.25rem; border-radius: 1rem; display:flex; gap:0.75rem; align-items:center; background: rgba(160,0,30,0.08); border: 1px solid rgba(160,0,30,0.2); backdrop-filter: blur(4px);';
+        banner.innerHTML = `
+          <span style="font-weight:600; color:#a0001e;">Modo demostración</span>
+          <span style="color: var(--color-text-muted);">No se pudo contactar el backend; se muestran métricas con datos de ejemplo para la presentación.</span>
+        `;
+
+        container.insertBefore(banner, header.nextSibling);
+        const totalBadge = document.getElementById('total-tickets');
+        if (totalBadge && !totalBadge.dataset.demo) {
+          totalBadge.dataset.demo = 'true';
+          totalBadge.textContent = `${totalBadge.textContent} · datos demo`;
+        }
+        demoBannerMostrado = true;
+      }
+
+      function aplicarResumen({ operativo, preventivos, backlog, productividad }) {
+        const resumenEstados = operativo?.resumen ?? [];
+        state.setPreventivos(preventivos?.preventivos ?? []);
+        state.setBacklog(backlog?.backlog ?? []);
+
+        const activos = resumenEstados
+          .filter((item) => ['en validacion', 'asignado', 'en ejecucion'].includes(item.estado))
+          .reduce((sum, item) => sum + (item.cantidad ?? 0), 0);
+        const cerrados = preventivos?.resumen?.cerrados ?? 0;
+        const promedioHoras = operativo?.promedioHoras ?? 0;
+        const total = operativo?.total ?? resumenEstados.reduce((sum, item) => sum + (item.cantidad ?? 0), 0);
+
+        document.getElementById('kpi-activos').textContent = activos;
+        document.getElementById('kpi-preventivos').textContent = cerrados;
+        document.getElementById('kpi-tiempo').textContent = `${promedioHoras.toFixed(1)}h`;
+
+        const totalBadge = document.getElementById('total-tickets');
+        if (totalBadge) {
+          totalBadge.textContent = `${total} tickets`;
+          if (totalBadge.dataset.demo === 'true') {
+            totalBadge.textContent = `${totalBadge.textContent} · datos demo`;
+          }
+        }
+
+        if (chartEstados) chartEstados.destroy();
+        chartEstados = buildDonut(document.getElementById('chart-estados'), resumenEstados);
+
+        renderBacklog(document.getElementById('backlog-grid'));
+        renderPreventivos(document.getElementById('preventivos-timeline'));
+
+        const tbody = document.querySelector('#tabla-productividad tbody');
+        const registros = productividad?.productividad ?? [];
+        tbody.innerHTML = registros.length
+          ? registros
+              .map(
+                (item) => `
+              <tr>
+                <td>${item.operarioId}</td>
+                <td>${item.total}</td>
+                <td>${item.cerrados}</td>
+                <td>${item.enCurso}</td>
+                <td>${item.preventivos}</td>
+                <td>${item.correctivos}</td>
+              </tr>
+            `
+              )
+              .join('')
+          : `<tr><td colspan="6" style="padding:1.5rem; text-align:center; color: var(--color-text-muted);">Sin datos de productividad disponibles.</td></tr>`;
+      }
+
+      async function cargarResumen() {
+        try {
+          const [operativo, preventivos, backlog, productividad] = await Promise.all([
+            api.resumenOperativo(),
+            api.preventivos(),
+            api.backlog(),
+            api.productividad(),
+          ]);
+
+          aplicarResumen({ operativo, preventivos, backlog, productividad });
+        } catch (error) {
+          console.error('No fue posible obtener los reportes desde el backend', error);
+          aplicarResumen(fallbackDataset);
+          mostrarBannerDemo();
+        }
+      }
+
+      document.getElementById('refresh-backlog').addEventListener('click', cargarResumen);
+      document.getElementById('refresh-productividad').addEventListener('click', cargarResumen);
+
+      cargarResumen();
+    </script>
+  </body>
+</html>
