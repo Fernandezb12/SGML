@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SGML | Ingreso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <style>
+      body.is-dark {
+        background: radial-gradient(circle at top right, #06121b, #02080f);
+      }
+      body.is-dark .login-panel {
+        background: linear-gradient(160deg, rgba(7, 60, 40, 0.95), rgba(4, 30, 25, 0.85));
+      }
+      body.is-dark .login-form {
+        background: rgba(10, 18, 26, 0.85);
+        color: #f8fbff;
+      }
+      body.is-dark input {
+        background: rgba(255, 255, 255, 0.05);
+        color: #f8fbff;
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="login-layout">
+      <article class="login-panel">
+        <div class="login-panel__content">
+          <div class="brand">
+            <div class="brand__logo">USCO</div>
+            <div>
+              <p class="brand__title">Sistema de Gestión de Mantenimiento Locativo</p>
+              <p style="margin: 0; opacity: 0.8">Universidad Surcolombiana</p>
+            </div>
+          </div>
+          <h1 style="font-size: 2.3rem; margin: 0">Bienvenido</h1>
+          <p style="max-width: 28ch; line-height: 1.6; opacity: 0.9">
+            Solicita, gestiona y supervisa las órdenes de mantenimiento correctivo y preventivo en todas las sedes.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem">
+            <li>✅ Notificaciones en tiempo real por asignación y cambios de estado</li>
+            <li>✅ Checklist digital obligatorio para cierre</li>
+            <li>✅ Planificación preventiva con alertas automáticas</li>
+          </ul>
+        </div>
+      </article>
+      <form class="login-form" id="login-form">
+        <header style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 style="margin: 0">Iniciar sesión</h2>
+            <p style="margin: 0.35rem 0 0; color: var(--color-text-muted)">Acceso seguro con trazabilidad por rol</p>
+          </div>
+          <button type="button" class="button button--ghost" id="theme-toggle">🌙 Modo oscuro</button>
+        </header>
+        <div class="input-group">
+          <label for="email">Correo institucional</label>
+          <input id="email" name="email" type="email" placeholder="usuario@usco.edu.co" required />
+        </div>
+        <div class="input-group">
+          <label for="password">Contraseña</label>
+          <input id="password" name="password" type="password" placeholder="Ingresa tu contraseña" required />
+        </div>
+        <div class="input-group">
+          <label for="backend-url">URL del backend</label>
+          <input id="backend-url" name="backend-url" type="url" placeholder="http://localhost:3000/api" />
+        </div>
+        <div id="login-error" class="alert" style="display:none"></div>
+        <button class="button" type="submit">Ingresar al panel</button>
+        <footer style="font-size: 0.85rem; color: var(--color-text-muted); display:flex; gap:0.5rem; align-items:center;">
+          <span>Roles demo:</span>
+          <span class="badge">oficina@usco.edu.co / Oficina123*</span>
+          <span class="badge">programador@usco.edu.co / Programador123*</span>
+          <span class="badge">operario.ac@usco.edu.co / Operario123*</span>
+        </footer>
+      </form>
+    </section>
+    <script type="module">
+      import { auth } from './assets/js/auth.js';
+      import { api } from './assets/js/api.js';
+      import { initThemeToggle } from './assets/js/theme.js';
+
+      const form = document.getElementById('login-form');
+      const errorBox = document.getElementById('login-error');
+      const backendInput = document.getElementById('backend-url');
+      const themeToggle = document.getElementById('theme-toggle');
+
+      initThemeToggle(themeToggle);
+
+      const savedUrl = localStorage.getItem('sgml_api_url');
+      if (savedUrl) {
+        backendInput.value = savedUrl;
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        errorBox.style.display = 'none';
+
+        const formData = new FormData(form);
+        const email = formData.get('email');
+        const password = formData.get('password');
+        const backendUrl = formData.get('backend-url')?.trim();
+
+        if (backendUrl) {
+          api.setBaseUrl(backendUrl.replace(/\/$/, ''));
+        }
+
+        try {
+          await auth.login({ email, password });
+          window.location.href = './index.html';
+        } catch (error) {
+          errorBox.textContent = error.message || 'No pudimos validar tus credenciales';
+          errorBox.style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>

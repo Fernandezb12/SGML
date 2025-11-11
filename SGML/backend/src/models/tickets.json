@@ -1,0 +1,135 @@
+[
+  {
+    "id": "TCK-20241111-001",
+    "numero": "TCK-20241111-001",
+    "tipo": "correctivo",
+    "categoria": "Aire acondicionado",
+    "prioridad": "alta",
+    "estado": "asignado",
+    "solicitante": {
+      "id": "user-001",
+      "nombre": "María Torres",
+      "dependencia": "Facultad de Ingeniería",
+      "contacto": "maria.torres@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Neiva - Sede Central",
+      "bloque": "Bloque B",
+      "espacio": "Laboratorio 204"
+    },
+    "descripcion": "El aire acondicionado no enciende y se percibe olor a quemado.",
+    "fechaCreacion": "2024-11-01T09:30:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-11-01T09:30:00.000Z",
+        "usuario": "user-001",
+        "comentario": "Ticket creado por la dependencia"
+      },
+      {
+        "estado": "en validacion",
+        "fecha": "2024-11-01T10:10:00.000Z",
+        "usuario": "user-100",
+        "comentario": "Se verifica que el equipo está fuera de servicio"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-11-01T11:00:00.000Z",
+        "usuario": "user-200",
+        "comentario": "Asignado a operario certificado en refrigeración"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-200",
+      "operarioId": "user-300",
+      "fechaProgramada": "2024-11-02T08:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Verificación eléctrica",
+        "completado": true,
+        "observacion": "Se identifica fusible quemado"
+      }
+    ],
+    "insumos": [
+      {
+        "nombre": "Fusible 20A",
+        "cantidad": 2,
+        "costoUnitario": 8000
+      }
+    ],
+    "evidencias": [
+      "https://example.com/evidencias/tck-20241111-001/antes.jpg"
+    ],
+    "preventivo": false,
+    "tiempos": {
+      "fechaInicio": "2024-11-02T08:15:00.000Z",
+      "fechaFin": null
+    }
+  },
+  {
+    "id": "TCK-20241105-005",
+    "numero": "TCK-20241105-005",
+    "tipo": "preventivo",
+    "categoria": "Red eléctrica",
+    "prioridad": "media",
+    "estado": "en ejecucion",
+    "solicitante": {
+      "id": "user-002",
+      "nombre": "Jorge Castillo",
+      "dependencia": "Centro de cómputo",
+      "contacto": "jorge.castillo@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Neiva - Sede Central",
+      "bloque": "Bloque Sistemas",
+      "espacio": "Sala de UPS"
+    },
+    "descripcion": "Mantenimiento preventivo programado del sistema de UPS.",
+    "fechaCreacion": "2024-11-05T13:45:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-11-05T13:45:00.000Z",
+        "usuario": "user-002",
+        "comentario": "Orden preventiva generada automáticamente"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-11-06T08:00:00.000Z",
+        "usuario": "user-210",
+        "comentario": "Asignación a cuadrilla eléctrica"
+      },
+      {
+        "estado": "en ejecucion",
+        "fecha": "2024-11-07T08:05:00.000Z",
+        "usuario": "user-310",
+        "comentario": "Operario inicia checklist"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-210",
+      "operarioId": "user-310",
+      "fechaProgramada": "2024-11-07T08:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Inspección general",
+        "completado": true,
+        "observacion": "Componentes en buen estado"
+      },
+      {
+        "titulo": "Pruebas de carga",
+        "completado": false,
+        "observacion": "Pendiente realizar pruebas en horario sin usuarios"
+      }
+    ],
+    "insumos": [],
+    "evidencias": [],
+    "preventivo": true,
+    "tiempos": {
+      "fechaInicio": "2024-11-07T08:05:00.000Z",
+      "fechaFin": null
+    }
+  }
+]
