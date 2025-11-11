@@ -164,140 +164,38 @@
       });
 
       let chartEstados;
-      let demoBannerMostrado = false;
 
-      const fallbackDataset = {
-        operativo: {
-          total: 18,
-          promedioHoras: 14.6,
-          resumen: [
-            { estado: 'nuevo', cantidad: 2 },
-            { estado: 'en validacion', cantidad: 3 },
-            { estado: 'asignado', cantidad: 4 },
-            { estado: 'en ejecucion', cantidad: 3 },
-            { estado: 'en espera', cantidad: 1 },
-            { estado: 'solucionado', cantidad: 3 },
-            { estado: 'cerrado', cantidad: 1 },
-            { estado: 'reabierto', cantidad: 1 },
-          ],
-        },
-        backlog: {
-          backlog: [
-            {
-              id: 'demo-001',
-              numero: 'TCK-DEMO-001',
-              prioridad: 'critica',
-              estado: 'en ejecucion',
-              fechaProgramada: '2024-11-05T08:00:00.000Z',
-              diasRetraso: 4,
-            },
-            {
-              id: 'demo-002',
-              numero: 'TCK-DEMO-002',
-              prioridad: 'alta',
-              estado: 'en espera',
-              fechaProgramada: '2024-11-07T14:00:00.000Z',
-              diasRetraso: 2,
-            },
-          ],
-        },
-        preventivos: {
-          resumen: { total: 5, cerrados: 3, enCurso: 1 },
-          preventivos: [
-            {
-              id: 'prev-001',
-              numero: 'PRV-DEMO-001',
-              descripcion: 'Inspección trimestral de luminarias en Bloque C',
-              prioridad: 'media',
-              estado: 'en ejecucion',
-              asignacion: { fechaProgramada: '2024-11-10T09:00:00.000Z' },
-            },
-            {
-              id: 'prev-002',
-              numero: 'PRV-DEMO-002',
-              descripcion: 'Mantenimiento preventivo aire acondicionado Biblioteca',
-              prioridad: 'alta',
-              estado: 'asignado',
-              asignacion: { fechaProgramada: '2024-11-12T14:00:00.000Z' },
-            },
-            {
-              id: 'prev-003',
-              numero: 'PRV-DEMO-003',
-              descripcion: 'Verificación anual de tableros eléctricos',
-              prioridad: 'critica',
-              estado: 'cerrado',
-              asignacion: { fechaProgramada: '2024-10-28T08:00:00.000Z' },
-            },
-          ],
-        },
-        productividad: {
-          productividad: [
-            { operarioId: 'OP-101', total: 6, cerrados: 3, enCurso: 2, preventivos: 2, correctivos: 4 },
-            { operarioId: 'OP-205', total: 5, cerrados: 2, enCurso: 2, preventivos: 1, correctivos: 4 },
-            { operarioId: 'OP-317', total: 4, cerrados: 1, enCurso: 2, preventivos: 1, correctivos: 3 },
-          ],
-        },
-      };
+      async function cargarResumen() {
+        try {
+          const [operativo, preventivos, backlog, productividad] = await Promise.all([
+            api.resumenOperativo(),
+            api.preventivos(),
+            api.backlog(),
+            api.productividad(),
+          ]);
 
-      function mostrarBannerDemo() {
-        if (demoBannerMostrado) return;
-        const container = document.querySelector('main.container');
-        const header = container?.querySelector('.header');
-        if (!container || !header) return;
+          state.setPreventivos(preventivos.preventivos ?? []);
+          state.setBacklog(backlog.backlog ?? []);
 
-        const banner = document.createElement('div');
-        banner.setAttribute('role', 'status');
-        banner.style.cssText = 'margin: 1rem 0 2rem; padding: 1rem 1.25rem; border-radius: 1rem; display:flex; gap:0.75rem; align-items:center; background: rgba(160,0,30,0.08); border: 1px solid rgba(160,0,30,0.2); backdrop-filter: blur(4px);';
-        banner.innerHTML = `
-          <span style="font-weight:600; color:#a0001e;">Modo demostración</span>
-          <span style="color: var(--color-text-muted);">No se pudo contactar el backend; se muestran métricas con datos de ejemplo para la presentación.</span>
-        `;
+          const activos = operativo.resumen.filter((item) => ['en validacion', 'asignado', 'en ejecucion'].includes(item.estado)).reduce((sum, item) => sum + item.cantidad, 0);
+          const cerrados = preventivos.resumen?.cerrados ?? 0;
+          const tiempoPromedio = (preventivos.resumen?.enCurso ?? 0) + (operativo.promedioHoras ?? 0);
 
-        container.insertBefore(banner, header.nextSibling);
-        const totalBadge = document.getElementById('total-tickets');
-        if (totalBadge && !totalBadge.dataset.demo) {
-          totalBadge.dataset.demo = 'true';
-          totalBadge.textContent = `${totalBadge.textContent} · datos demo`;
-        }
-        demoBannerMostrado = true;
-      }
+          document.getElementById('kpi-activos').textContent = activos;
+          document.getElementById('kpi-preventivos').textContent = cerrados;
+          document.getElementById('kpi-tiempo').textContent = `${(operativo.promedioHoras ?? 0).toFixed(1)}h`;
+          document.getElementById('total-tickets').textContent = `${operativo.total ?? 0} tickets`;
 
-      function aplicarResumen({ operativo, preventivos, backlog, productividad }) {
-        const resumenEstados = operativo?.resumen ?? [];
-        state.setPreventivos(preventivos?.preventivos ?? []);
-        state.setBacklog(backlog?.backlog ?? []);
+          if (chartEstados) chartEstados.destroy();
+          chartEstados = buildDonut(document.getElementById('chart-estados'), operativo.resumen);
 
-        const activos = resumenEstados
-          .filter((item) => ['en validacion', 'asignado', 'en ejecucion'].includes(item.estado))
-          .reduce((sum, item) => sum + (item.cantidad ?? 0), 0);
-        const cerrados = preventivos?.resumen?.cerrados ?? 0;
-        const promedioHoras = operativo?.promedioHoras ?? 0;
-        const total = operativo?.total ?? resumenEstados.reduce((sum, item) => sum + (item.cantidad ?? 0), 0);
+          renderBacklog(document.getElementById('backlog-grid'));
+          renderPreventivos(document.getElementById('preventivos-timeline'));
 
-        document.getElementById('kpi-activos').textContent = activos;
-        document.getElementById('kpi-preventivos').textContent = cerrados;
-        document.getElementById('kpi-tiempo').textContent = `${promedioHoras.toFixed(1)}h`;
-
-        const totalBadge = document.getElementById('total-tickets');
-        if (totalBadge) {
-          totalBadge.textContent = `${total} tickets`;
-          if (totalBadge.dataset.demo === 'true') {
-            totalBadge.textContent = `${totalBadge.textContent} · datos demo`;
-          }
-        }
-
-        if (chartEstados) chartEstados.destroy();
-        chartEstados = buildDonut(document.getElementById('chart-estados'), resumenEstados);
-
-        renderBacklog(document.getElementById('backlog-grid'));
-        renderPreventivos(document.getElementById('preventivos-timeline'));
-
-        const tbody = document.querySelector('#tabla-productividad tbody');
-        const registros = productividad?.productividad ?? [];
-        tbody.innerHTML = registros.length
-          ? registros
-              .map(
-                (item) => `
+          const tbody = document.querySelector('#tabla-productividad tbody');
+          tbody.innerHTML = productividad.productividad
+            .map(
+              (item) => `
               <tr>
                 <td>${item.operarioId}</td>
                 <td>${item.total}</td>

@@ -33,17 +33,6 @@ export function renderTicketsTable(table) {
 
 export function renderBacklog(container) {
   if (!container) return;
-  if (!state.backlog.length) {
-    container.innerHTML = `
-      <div class="card" style="grid-column: 1 / -1; text-align:center; padding:2rem 1.5rem; border: 1px dashed rgba(0,0,0,0.08); background: rgba(0,104,55,0.04);">
-        <h3 style="margin: 0; color: var(--color-primary)">Sin backlog crítico</h3>
-        <p style="margin: 0.5rem 0 0; color: var(--color-text-muted)">
-          No se detectaron órdenes atrasadas. Los casos aparecerán aquí cuando superen la fecha programada.
-        </p>
-      </div>
-    `;
-    return;
-  }
   container.innerHTML = state.backlog
     .map(
       (item) => `
@@ -61,17 +50,6 @@ export function renderBacklog(container) {
 
 export function renderPreventivos(container) {
   if (!container) return;
-  if (!state.preventivos.length) {
-    container.innerHTML = `
-      <div style="padding:2rem 1.5rem; border: 1px dashed rgba(0,0,0,0.08); border-radius:1rem; background: rgba(160,0,30,0.04); text-align:center;">
-        <h3 style="margin:0; color: var(--color-primary)">Sin preventivos programados</h3>
-        <p style="margin:0.5rem 0 0; color: var(--color-text-muted)">
-          Programa actividades preventivas desde la oficina de mantenimiento para verlas reflejadas en esta línea de tiempo.
-        </p>
-      </div>
-    `;
-    return;
-  }
   container.innerHTML = state.preventivos
     .map(
       (ticket) => `

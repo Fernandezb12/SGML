@@ -46,7 +46,7 @@ backend/
    npm start
    ```
 
-El servidor intenta usar `http://localhost:3000` por defecto. Si el puerto está ocupado, busca uno libre (3001, 3002, …) y lo indica en consola. También puedes fijar manualmente otro puerto ejecutando `PORT=4000 npm start`.
+El servidor escuchará por defecto en `http://localhost:3000`.
 
 ## Autenticación
 
@@ -112,31 +112,3 @@ curl -X POST http://localhost:3000/api/tickets/TCK-20241111-001/estado \
 - Integrar notificaciones (correo o push) en cambios de estado.
 - Añadir pruebas unitarias con Jest o Vitest.
 - Desplegar en contenedores (Docker) y usar un CDN para el frontend.
-
-## Despliegue en Vercel
-
-La API funciona en Vercel como una Function Serverless reutilizando el mismo código de Express. El repositorio ya incluye la
-carpeta `api/` y el archivo `vercel.json` necesarios.
-
-1. **Crear el proyecto**
-   - En Vercel haz clic en **New Project** y selecciona este repositorio.
-   - Cuando te pregunte por la carpeta raíz indica `backend` (monorepo support).
-
-2. **Configurar Build & Output**
-   - Framework preset: **Other**.
-   - Comando de instalación: `npm install`.
-   - Comando de build: *(dejar vacío, no se compila)*.
-   - Output directory: *(dejar vacío)*.
-
-3. **Variables de entorno opcionales**
-   - Si necesitas claves adicionales, agrégalas en la sección **Environment Variables**. El proyecto no requiere ninguna para
-     funcionar con los datos mock.
-
-4. **Deploy**
-   - Al terminar la importación, Vercel detectará `api/index.js` y expondrá toda la API bajo la misma URL (por ejemplo
-     `https://sgml-backend.vercel.app/api/tickets`).
-   - Puedes probar rápidamente haciendo `curl https://<tu-dominio>/api/catalogo`.
-
-5. **Uso local con Vercel CLI (opcional)**
-   - Instala la CLI: `npm i -g vercel`.
-   - Desde `backend/` ejecuta `vercel dev` para emular las Functions con hot reload.

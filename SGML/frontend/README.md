@@ -39,28 +39,3 @@ frontend/
 ```
 
 Puedes extender este frontend con frameworks como React o Vue. Al mantener módulos ES separados, es sencillo migrar la lógica actual a componentes.
-
-## Despliegue en Vercel
-
-El frontend es un sitio estático, por lo que Vercel lo puede servir directamente. El archivo `vercel.json` ya mapea rutas amigables.
-
-1. **Nuevo proyecto**
-   - En Vercel selecciona **New Project** y elige este repositorio.
-   - Establece la carpeta raíz en `frontend`.
-
-2. **Configuración**
-   - Framework preset: **Other**.
-   - Build command: *(vacío)*.
-   - Output directory: `.` (directorio actual).
-   - Habilita la opción **Clean URLs** si te lo solicita (el `vercel.json` ya lo define).
-
-3. **Variables de entorno**
-   - Define `VITE_API_URL` o similar si en el futuro migras a bundlers. Hoy puedes editar `assets/js/api.js` para ajustar la URL del backend
-     desplegado (ej. `https://sgml-backend.vercel.app`).
-
-4. **Deploy y pruebas**
-   - Una vez completado el despliegue visita `https://<tu-frontend>.vercel.app/login` e inicia sesión con los usuarios demo.
-   - Verifica que el archivo `assets/js/api.js` apunte al dominio del backend en Vercel para evitar CORS.
-
-5. **Vista previa local con Vercel CLI (opcional)**
-   - Desde `frontend/` ejecuta `vercel dev` para obtener un servidor estático con las mismas rutas que en producción.
