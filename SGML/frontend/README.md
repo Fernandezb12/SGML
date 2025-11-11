@@ -21,6 +21,7 @@ Interfaz web ligera para el Sistema de Gestión de Mantenimiento Locativo (SGML)
 1. Inicia el backend siguiendo las instrucciones en `../backend/README.md`.
 2. Abre `frontend/login.html` en tu navegador (doble clic o a través de un servidor estático si prefieres).
 3. Ingresa con alguno de los usuarios demo:
+   - Solicitante: `solicitante@usco.edu.co` / `Sol12345*`
    - Oficina: `oficina@usco.edu.co` / `Oficina123*`
    - Programador: `programador@usco.edu.co` / `Programador123*`
    - Operario: `operario.ac@usco.edu.co` / `Operario123*`
