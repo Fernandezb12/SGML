@@ -1,0 +1,37 @@
+[
+  {
+    "id": "user-001",
+    "nombre": "María Torres",
+    "email": "solicitante@usco.edu.co",
+    "password": "Sol12345*",
+    "rol": "solicitante"
+  },
+  {
+    "id": "user-100",
+    "nombre": "Oficina de Mantenimiento",
+    "email": "oficina@usco.edu.co",
+    "password": "Oficina123*",
+    "rol": "oficina"
+  },
+  {
+    "id": "user-200",
+    "nombre": "Jefe Programador",
+    "email": "programador@usco.edu.co",
+    "password": "Programador123*",
+    "rol": "programador"
+  },
+  {
+    "id": "user-300",
+    "nombre": "Carlos López",
+    "email": "operario.ac@usco.edu.co",
+    "password": "Operario123*",
+    "rol": "operario"
+  },
+  {
+    "id": "user-400",
+    "nombre": "Coordinador Preventivo",
+    "email": "preventivo@usco.edu.co",
+    "password": "Preventivo123*",
+    "rol": "preventivo"
+  }
+]
