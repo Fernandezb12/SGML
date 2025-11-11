@@ -205,10 +205,25 @@
                 <td>${item.correctivos}</td>
               </tr>
             `
-            )
-            .join('');
+              )
+              .join('')
+          : `<tr><td colspan="6" style="padding:1.5rem; text-align:center; color: var(--color-text-muted);">Sin datos de productividad disponibles.</td></tr>`;
+      }
+
+      async function cargarResumen() {
+        try {
+          const [operativo, preventivos, backlog, productividad] = await Promise.all([
+            api.resumenOperativo(),
+            api.preventivos(),
+            api.backlog(),
+            api.productividad(),
+          ]);
+
+          aplicarResumen({ operativo, preventivos, backlog, productividad });
         } catch (error) {
-          console.error(error);
+          console.error('No fue posible obtener los reportes desde el backend', error);
+          aplicarResumen(fallbackDataset);
+          mostrarBannerDemo();
         }
       }
 
