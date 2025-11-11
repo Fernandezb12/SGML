@@ -1,0 +1,561 @@
+[
+  {
+    "id": "TCK-20241111-001",
+    "numero": "TCK-20241111-001",
+    "tipo": "correctivo",
+    "categoria": "Aire acondicionado",
+    "prioridad": "alta",
+    "estado": "asignado",
+    "solicitante": {
+      "id": "user-001",
+      "nombre": "María Torres",
+      "dependencia": "Facultad de Ingeniería",
+      "contacto": "maria.torres@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Neiva - Sede Central",
+      "bloque": "Bloque B",
+      "espacio": "Laboratorio 204"
+    },
+    "descripcion": "El aire acondicionado no enciende y se percibe olor a quemado.",
+    "fechaCreacion": "2024-11-01T09:30:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-11-01T09:30:00.000Z",
+        "usuario": "user-001",
+        "comentario": "Ticket creado por la dependencia"
+      },
+      {
+        "estado": "en validacion",
+        "fecha": "2024-11-01T10:10:00.000Z",
+        "usuario": "user-100",
+        "comentario": "Se verifica que el equipo está fuera de servicio"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-11-01T11:00:00.000Z",
+        "usuario": "user-200",
+        "comentario": "Asignado a operario certificado en refrigeración"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-200",
+      "operarioId": "user-300",
+      "fechaProgramada": "2024-11-02T08:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Verificación eléctrica",
+        "completado": true,
+        "observacion": "Se identifica fusible quemado"
+      }
+    ],
+    "insumos": [
+      {
+        "nombre": "Fusible 20A",
+        "cantidad": 2,
+        "costoUnitario": 8000
+      }
+    ],
+    "evidencias": [
+      "https://usco.edu.co/evidencias/tck-20241111-001/antes.jpg"
+    ],
+    "preventivo": false,
+    "tiempos": {
+      "fechaInicio": "2024-11-02T08:15:00.000Z",
+      "fechaFin": null
+    }
+  },
+  {
+    "id": "TCK-20241105-005",
+    "numero": "TCK-20241105-005",
+    "tipo": "preventivo",
+    "categoria": "Red eléctrica",
+    "prioridad": "media",
+    "estado": "en ejecucion",
+    "solicitante": {
+      "id": "user-002",
+      "nombre": "Jorge Castillo",
+      "dependencia": "Centro de cómputo",
+      "contacto": "jorge.castillo@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Neiva - Sede Central",
+      "bloque": "Bloque Sistemas",
+      "espacio": "Sala de UPS"
+    },
+    "descripcion": "Mantenimiento preventivo programado del sistema de UPS.",
+    "fechaCreacion": "2024-11-05T13:45:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-11-05T13:45:00.000Z",
+        "usuario": "user-002",
+        "comentario": "Orden preventiva generada automáticamente"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-11-06T08:00:00.000Z",
+        "usuario": "user-210",
+        "comentario": "Asignación a cuadrilla eléctrica"
+      },
+      {
+        "estado": "en ejecucion",
+        "fecha": "2024-11-07T08:05:00.000Z",
+        "usuario": "user-310",
+        "comentario": "Operario inicia checklist"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-210",
+      "operarioId": "user-310",
+      "fechaProgramada": "2024-11-07T08:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Inspección general",
+        "completado": true,
+        "observacion": "Componentes en buen estado"
+      },
+      {
+        "titulo": "Pruebas de carga",
+        "completado": false,
+        "observacion": "Pendiente realizar pruebas en horario sin usuarios"
+      }
+    ],
+    "insumos": [],
+    "evidencias": [
+      "https://usco.edu.co/evidencias/tck-20241105-005/panel.jpg"
+    ],
+    "preventivo": true,
+    "tiempos": {
+      "fechaInicio": "2024-11-07T08:05:00.000Z",
+      "fechaFin": null
+    }
+  },
+  {
+    "id": "TCK-20241028-012",
+    "numero": "TCK-20241028-012",
+    "tipo": "correctivo",
+    "categoria": "Iluminación",
+    "prioridad": "critica",
+    "estado": "en espera",
+    "solicitante": {
+      "id": "user-010",
+      "nombre": "Carlos Peña",
+      "dependencia": "Laboratorio de Física",
+      "contacto": "carlos.pena@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Neiva - Sede Central",
+      "bloque": "Bloque C",
+      "espacio": "Sala de experimentos"
+    },
+    "descripcion": "Corto circuito en luminarias principales, se detecta olor a cable quemado.",
+    "fechaCreacion": "2024-10-28T07:20:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-10-28T07:20:00.000Z",
+        "usuario": "user-010",
+        "comentario": "Reportado por docente"
+      },
+      {
+        "estado": "en validacion",
+        "fecha": "2024-10-28T08:00:00.000Z",
+        "usuario": "user-110",
+        "comentario": "Se confirma riesgo eléctrico"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-10-28T09:15:00.000Z",
+        "usuario": "user-210",
+        "comentario": "Asignado a cuadrilla eléctrica"
+      },
+      {
+        "estado": "en ejecucion",
+        "fecha": "2024-10-28T11:10:00.000Z",
+        "usuario": "user-311",
+        "comentario": "Se retiran luminarias dañadas"
+      },
+      {
+        "estado": "en espera",
+        "fecha": "2024-10-28T14:40:00.000Z",
+        "usuario": "user-311",
+        "comentario": "Se requiere repuesto importado"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-210",
+      "operarioId": "user-311",
+      "fechaProgramada": "2024-10-28T10:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Aislar circuito",
+        "completado": true,
+        "observacion": "Circuito desenergizado"
+      },
+      {
+        "titulo": "Reemplazar luminarias",
+        "completado": false,
+        "observacion": "Pendiente llegada de repuestos"
+      }
+    ],
+    "insumos": [
+      {
+        "nombre": "Kit luminaria LED 60W",
+        "cantidad": 6,
+        "costoUnitario": 185000
+      }
+    ],
+    "evidencias": [
+      "https://usco.edu.co/evidencias/tck-20241028-012/falla.jpg",
+      "https://usco.edu.co/evidencias/tck-20241028-012/aislamiento.jpg"
+    ],
+    "preventivo": false,
+    "tiempos": {
+      "fechaInicio": "2024-10-28T11:10:00.000Z",
+      "fechaFin": null
+    }
+  },
+  {
+    "id": "TCK-20240915-021",
+    "numero": "TCK-20240915-021",
+    "tipo": "preventivo",
+    "categoria": "Aire acondicionado",
+    "prioridad": "baja",
+    "estado": "cerrado",
+    "solicitante": {
+      "id": "user-050",
+      "nombre": "Mantenimiento Programado",
+      "dependencia": "Oficina de Infraestructura",
+      "contacto": "preventivo@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Pitalito",
+      "bloque": "Bloque Aulas",
+      "espacio": "Aula 305"
+    },
+    "descripcion": "Rutina trimestral de limpieza de filtros de aire.",
+    "fechaCreacion": "2024-09-10T12:00:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-09-10T12:00:00.000Z",
+        "usuario": "user-050",
+        "comentario": "Orden generada por plan preventivo"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-09-12T08:00:00.000Z",
+        "usuario": "user-205",
+        "comentario": "Asignación a operario HVAC"
+      },
+      {
+        "estado": "en ejecucion",
+        "fecha": "2024-09-13T08:15:00.000Z",
+        "usuario": "user-305",
+        "comentario": "Inicio de limpieza"
+      },
+      {
+        "estado": "solucionado",
+        "fecha": "2024-09-13T10:30:00.000Z",
+        "usuario": "user-305",
+        "comentario": "Checklist completado, se agregan evidencias"
+      },
+      {
+        "estado": "cerrado",
+        "fecha": "2024-09-14T09:00:00.000Z",
+        "usuario": "user-100",
+        "comentario": "Oficina valida servicio preventivo"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-205",
+      "operarioId": "user-305",
+      "fechaProgramada": "2024-09-13T08:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Desenergizar equipo",
+        "completado": true,
+        "observacion": "Breaker bloqueado"
+      },
+      {
+        "titulo": "Retirar y lavar filtros",
+        "completado": true,
+        "observacion": "Filtros secados y reinstalados"
+      },
+      {
+        "titulo": "Registro fotográfico",
+        "completado": true,
+        "observacion": "Fotos subidas a SGML"
+      }
+    ],
+    "insumos": [
+      {
+        "nombre": "Detergente neutro",
+        "cantidad": 1,
+        "costoUnitario": 12000
+      }
+    ],
+    "evidencias": [
+      "https://usco.edu.co/evidencias/tck-20240915-021/filtros-antes.jpg",
+      "https://usco.edu.co/evidencias/tck-20240915-021/filtros-despues.jpg"
+    ],
+    "preventivo": true,
+    "tiempos": {
+      "fechaInicio": "2024-09-13T08:15:00.000Z",
+      "fechaFin": "2024-09-13T10:20:00.000Z"
+    }
+  },
+  {
+    "id": "TCK-20240802-033",
+    "numero": "TCK-20240802-033",
+    "tipo": "correctivo",
+    "categoria": "Red eléctrica",
+    "prioridad": "alta",
+    "estado": "solucionado",
+    "solicitante": {
+      "id": "user-022",
+      "nombre": "Laura Medina",
+      "dependencia": "Biblioteca Central",
+      "contacto": "laura.medina@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Neiva - Sede Central",
+      "bloque": "Biblioteca",
+      "espacio": "Sala de estudio 3"
+    },
+    "descripcion": "Tomacorriente suelto generando chispas al conectar equipos.",
+    "fechaCreacion": "2024-08-02T15:10:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-08-02T15:10:00.000Z",
+        "usuario": "user-022",
+        "comentario": "Reporte inicial"
+      },
+      {
+        "estado": "en validacion",
+        "fecha": "2024-08-02T16:00:00.000Z",
+        "usuario": "user-101",
+        "comentario": "Validación presencial"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-08-03T08:00:00.000Z",
+        "usuario": "user-201",
+        "comentario": "Asignado a cuadrilla eléctrica"
+      },
+      {
+        "estado": "en ejecucion",
+        "fecha": "2024-08-03T09:05:00.000Z",
+        "usuario": "user-320",
+        "comentario": "Operario en sitio"
+      },
+      {
+        "estado": "solucionado",
+        "fecha": "2024-08-03T10:00:00.000Z",
+        "usuario": "user-320",
+        "comentario": "Checklist completo a falta de validación"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-201",
+      "operarioId": "user-320",
+      "fechaProgramada": "2024-08-03T09:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Aislar circuito",
+        "completado": true,
+        "observacion": "Interruptor desactivado"
+      },
+      {
+        "titulo": "Reinstalar tomacorriente",
+        "completado": true,
+        "observacion": "Equipo fijo con anclajes"
+      },
+      {
+        "titulo": "Medición final",
+        "completado": true,
+        "observacion": "Voltaje estable"
+      }
+    ],
+    "insumos": [
+      {
+        "nombre": "Tomacorriente duplex",
+        "cantidad": 1,
+        "costoUnitario": 23000
+      },
+      {
+        "nombre": "Caja de embutir",
+        "cantidad": 1,
+        "costoUnitario": 18000
+      }
+    ],
+    "evidencias": [
+      "https://usco.edu.co/evidencias/tck-20240802-033/antes.jpg",
+      "https://usco.edu.co/evidencias/tck-20240802-033/despues.jpg"
+    ],
+    "preventivo": false,
+    "tiempos": {
+      "fechaInicio": "2024-08-03T09:05:00.000Z",
+      "fechaFin": "2024-08-03T09:55:00.000Z"
+    }
+  },
+  {
+    "id": "TCK-20240720-047",
+    "numero": "TCK-20240720-047",
+    "tipo": "correctivo",
+    "categoria": "Gas y plomería",
+    "prioridad": "media",
+    "estado": "reabierto",
+    "solicitante": {
+      "id": "user-031",
+      "nombre": "Sandra Pardo",
+      "dependencia": "Laboratorios de Química",
+      "contacto": "sandra.pardo@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Neiva - Sede Central",
+      "bloque": "Bloque Laboratorios",
+      "espacio": "Laboratorio húmedo 2"
+    },
+    "descripcion": "Fuga menor en tubería de agua destilada, reaparece luego de intervención.",
+    "fechaCreacion": "2024-07-20T10:40:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-07-20T10:40:00.000Z",
+        "usuario": "user-031",
+        "comentario": "Reporte inicial"
+      },
+      {
+        "estado": "en validacion",
+        "fecha": "2024-07-20T11:30:00.000Z",
+        "usuario": "user-102",
+        "comentario": "Se verifica fuga"
+      },
+      {
+        "estado": "asignado",
+        "fecha": "2024-07-21T08:00:00.000Z",
+        "usuario": "user-202",
+        "comentario": "Asignado a fontanería"
+      },
+      {
+        "estado": "en ejecucion",
+        "fecha": "2024-07-21T09:10:00.000Z",
+        "usuario": "user-330",
+        "comentario": "Reparación inicial"
+      },
+      {
+        "estado": "solucionado",
+        "fecha": "2024-07-21T11:45:00.000Z",
+        "usuario": "user-330",
+        "comentario": "Se registra checklist completo"
+      },
+      {
+        "estado": "cerrado",
+        "fecha": "2024-07-22T08:30:00.000Z",
+        "usuario": "user-100",
+        "comentario": "Dependencia confirma servicio"
+      },
+      {
+        "estado": "reabierto",
+        "fecha": "2024-07-24T09:50:00.000Z",
+        "usuario": "user-031",
+        "comentario": "Se detecta nueva fuga"
+      }
+    ],
+    "asignacion": {
+      "programadorId": "user-202",
+      "operarioId": "user-330",
+      "fechaProgramada": "2024-07-21T09:00:00.000Z"
+    },
+    "checklist": [
+      {
+        "titulo": "Cerrar válvulas",
+        "completado": true,
+        "observacion": "Sistema despresurizado"
+      },
+      {
+        "titulo": "Sellar unión",
+        "completado": true,
+        "observacion": "Se usa teflón industrial"
+      },
+      {
+        "titulo": "Prueba de presión",
+        "completado": true,
+        "observacion": "Sin fugas al cierre inicial"
+      }
+    ],
+    "insumos": [
+      {
+        "nombre": "Teflón industrial",
+        "cantidad": 1,
+        "costoUnitario": 9000
+      },
+      {
+        "nombre": "Conector PVC 1/2\"",
+        "cantidad": 2,
+        "costoUnitario": 6500
+      }
+    ],
+    "evidencias": [
+      "https://usco.edu.co/evidencias/tck-20240720-047/reparacion.jpg"
+    ],
+    "preventivo": false,
+    "tiempos": {
+      "fechaInicio": "2024-07-21T09:10:00.000Z",
+      "fechaFin": "2024-07-21T11:30:00.000Z"
+    }
+  },
+  {
+    "id": "TCK-20240610-059",
+    "numero": "TCK-20240610-059",
+    "tipo": "preventivo",
+    "categoria": "Iluminación",
+    "prioridad": "media",
+    "estado": "nuevo",
+    "solicitante": {
+      "id": "user-060",
+      "nombre": "Programa Preventivo Iluminación",
+      "dependencia": "Oficina de Infraestructura",
+      "contacto": "luminarias@usco.edu.co"
+    },
+    "ubicacion": {
+      "sede": "Garzón",
+      "bloque": "Bloque Administrativo",
+      "espacio": "Pasillo segundo piso"
+    },
+    "descripcion": "Inspección semestral de luminarias LED.",
+    "fechaCreacion": "2024-06-10T08:00:00.000Z",
+    "historial": [
+      {
+        "estado": "nuevo",
+        "fecha": "2024-06-10T08:00:00.000Z",
+        "usuario": "user-060",
+        "comentario": "Orden preventiva agendada"
+      }
+    ],
+    "asignacion": null,
+    "checklist": [
+      {
+        "titulo": "Verificar luminarias",
+        "completado": false,
+        "observacion": "Pendiente asignación"
+      }
+    ],
+    "insumos": [],
+    "evidencias": [],
+    "preventivo": true,
+    "tiempos": {
+      "fechaInicio": null,
+      "fechaFin": null
+    }
+  }
+]

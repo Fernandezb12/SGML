@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SGML | Gestión de tickets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body>
+    <main class="container" style="padding: 2.5rem 0 4rem">
+      <header class="header">
+        <div class="brand">
+          <div class="brand__logo">USCO</div>
+          <div>
+            <p class="brand__title">SGML · Tickets</p>
+            <p style="margin: 0; color: var(--color-text-muted)">Creación, asignación y seguimiento detallado</p>
+          </div>
+        </div>
+        <nav class="navbar">
+          <div class="nav-tabs">
+            <button data-link="index.html">Dashboard</button>
+            <button class="active" data-link="tickets.html">Tickets</button>
+          </div>
+          <div class="navbar__actions">
+            <div class="navbar__user">
+              <strong id="user-name">Usuario</strong>
+              <span id="user-role" style="color: var(--color-text-muted); font-size: 0.85rem"></span>
+            </div>
+            <button class="button button--ghost" id="theme-toggle">🌙 Modo oscuro</button>
+            <button class="button" id="nuevo-ticket">➕ Nuevo ticket</button>
+            <button class="button button--ghost" id="logout-button">Salir</button>
+          </div>
+        </nav>
+      </header>
+
+      <section class="card" style="margin-bottom: 2rem" id="form-wrapper" hidden>
+        <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <div>
+            <h2 style="margin: 0">Registrar requerimiento</h2>
+            <p style="margin: 0.25rem 0 0; color: var(--color-text-muted)">Completa los datos para generar un ticket de mantenimiento.</p>
+          </div>
+          <button class="button button--ghost" id="cerrar-form">Cerrar</button>
+        </header>
+        <form id="ticket-form" class="grid grid--2">
+          <div class="input-group">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo">
+              <option value="correctivo">Correctivo</option>
+              <option value="preventivo">Preventivo</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required></select>
+          </div>
+          <div class="input-group">
+            <label for="prioridad">Prioridad</label>
+            <select id="prioridad" name="prioridad" required></select>
+          </div>
+          <div class="input-group">
+            <label for="dependencia">Dependencia solicitante</label>
+            <input id="dependencia" name="dependencia" placeholder="Facultad, laboratorio, etc." required />
+          </div>
+          <div class="input-group" style="grid-column: 1 / -1;">
+            <label for="descripcion">Descripción detallada</label>
+            <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+          </div>
+          <div class="input-group">
+            <label for="sede">Sede</label>
+            <select id="sede" name="sede" required></select>
+          </div>
+          <div class="input-group">
+            <label for="bloque">Bloque</label>
+            <select id="bloque" name="bloque"></select>
+          </div>
+          <div class="input-group">
+            <label for="espacio">Espacio</label>
+            <input id="espacio" name="espacio" placeholder="Aula, laboratorio, oficina" />
+          </div>
+          <div class="input-group">
+            <label for="contacto">Correo de contacto</label>
+            <input id="contacto" name="contacto" type="email" placeholder="contacto@usco.edu.co" required />
+          </div>
+          <div class="input-group" style="grid-column: 1 / -1;">
+            <label for="evidencias">Evidencias (URL separadas por coma)</label>
+            <input id="evidencias" name="evidencias" placeholder="https://drive/..." />
+          </div>
+          <div style="grid-column: 1 / -1; display:flex; gap:1rem;">
+            <button class="button" type="submit">Guardar ticket</button>
+            <button class="button button--ghost" type="reset">Limpiar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <header style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin-bottom:1rem;">
+          <h2 style="margin: 0">Tickets registrados</h2>
+          <div style="flex:1; display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:0.75rem;">
+            <div class="input-group" style="margin:0">
+              <label for="filtro-estado">Estado</label>
+              <select id="filtro-estado">
+                <option value="">Todos</option>
+                <option value="nuevo">Nuevo</option>
+                <option value="en validacion">En validación</option>
+                <option value="asignado">Asignado</option>
+                <option value="en ejecucion">En ejecución</option>
+                <option value="en espera">En espera</option>
+                <option value="solucionado">Solucionado</option>
+                <option value="cerrado">Cerrado</option>
+                <option value="reabierto">Reabierto</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin:0">
+              <label for="filtro-prioridad">Prioridad</label>
+              <select id="filtro-prioridad">
+                <option value="">Todas</option>
+                <option value="critica">Crítica</option>
+                <option value="alta">Alta</option>
+                <option value="media">Media</option>
+                <option value="baja">Baja</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin:0">
+              <label for="filtro-tipo">Tipo</label>
+              <select id="filtro-tipo">
+                <option value="">Todos</option>
+                <option value="correctivo">Correctivo</option>
+                <option value="preventivo">Preventivo</option>
+              </select>
+            </div>
+          </div>
+          <button class="button button--ghost" id="refrescar-lista">Refrescar</button>
+        </header>
+        <table class="table" id="tabla-tickets">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Categoría</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+              <th>Dependencia</th>
+              <th>Creado</th>
+              <th>Operario</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </main>
+
+    <script type="module">
+      import { auth } from './assets/js/auth.js';
+      import { api } from './assets/js/api.js';
+      import { initThemeToggle } from './assets/js/theme.js';
+      import { state } from './assets/js/state.js';
+      import { renderTicketsTable } from './assets/js/ui.js';
+
+      auth.requireAuth();
+
+      const user = auth.getUser();
+      document.getElementById('user-name').textContent = user?.nombre ?? '';
+      document.getElementById('user-role').textContent = user?.rol ?? '';
+
+      const themeToggle = document.getElementById('theme-toggle');
+      initThemeToggle(themeToggle);
+
+      document.getElementById('logout-button').addEventListener('click', async () => {
+        await auth.logout();
+        window.location.href = './login.html';
+      });
+
+      document.querySelectorAll('.nav-tabs button').forEach((button) => {
+        button.addEventListener('click', () => {
+          const link = button.getAttribute('data-link');
+          if (link && !button.classList.contains('active')) {
+            window.location.href = `./${link}`;
+          }
+        });
+      });
+
+      const formWrapper = document.getElementById('form-wrapper');
+      const form = document.getElementById('ticket-form');
+      const nuevoTicketBtn = document.getElementById('nuevo-ticket');
+      const cerrarFormBtn = document.getElementById('cerrar-form');
+
+      nuevoTicketBtn.addEventListener('click', () => {
+        formWrapper.hidden = false;
+        formWrapper.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      cerrarFormBtn.addEventListener('click', () => {
+        formWrapper.hidden = true;
+      });
+
+      async function cargarCatalogo() {
+        const catalogo = await api.catalogo();
+        state.setCatalogo(catalogo);
+
+        const categoriaSelect = document.getElementById('categoria');
+        categoriaSelect.innerHTML = catalogo.categorias
+          .map((categoria) => `<option value="${categoria.nombre}">${categoria.nombre}</option>`)
+          .join('');
+
+        const prioridadSelect = document.getElementById('prioridad');
+        prioridadSelect.innerHTML = catalogo.prioridades
+          .map((prioridad) => `<option value="${prioridad.id}">${prioridad.nombre}</option>`)
+          .join('');
+
+        const sedeSelect = document.getElementById('sede');
+        sedeSelect.innerHTML = catalogo.sedes
+          .map((sede) => `<option value="${sede.nombre}">${sede.nombre}</option>`)
+          .join('');
+
+        sedeSelect.addEventListener('change', (event) => {
+          const selected = catalogo.sedes.find((sede) => sede.nombre === event.target.value);
+          const bloqueSelect = document.getElementById('bloque');
+          bloqueSelect.innerHTML = selected?.bloques?.map((bloque) => `<option value="${bloque.nombre}">${bloque.nombre}</option>`).join('') ?? '';
+        });
+
+        sedeSelect.dispatchEvent(new Event('change'));
+      }
+
+      async function cargarTickets() {
+        const filtros = {
+          estado: document.getElementById('filtro-estado').value || undefined,
+          prioridad: document.getElementById('filtro-prioridad').value || undefined,
+          tipo: document.getElementById('filtro-tipo').value || undefined,
+        };
+
+        const response = await api.tickets(filtros);
+        state.setTickets(response.tickets ?? []);
+        renderTicketsTable(document.getElementById('tabla-tickets'));
+      }
+
+      document.getElementById('filtro-estado').addEventListener('change', cargarTickets);
+      document.getElementById('filtro-prioridad').addEventListener('change', cargarTickets);
+      document.getElementById('filtro-tipo').addEventListener('change', cargarTickets);
+      document.getElementById('refrescar-lista').addEventListener('click', cargarTickets);
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const payload = {
+          tipo: data.get('tipo'),
+          categoria: data.get('categoria'),
+          prioridad: data.get('prioridad'),
+          descripcion: data.get('descripcion'),
+          preventivo: data.get('tipo') === 'preventivo',
+          solicitante: {
+            nombre: user?.nombre ?? 'Dependencia USCO',
+            dependencia: data.get('dependencia'),
+            contacto: data.get('contacto'),
+          },
+          ubicacion: {
+            sede: data.get('sede'),
+            bloque: data.get('bloque'),
+            espacio: data.get('espacio'),
+          },
+          evidencias: data.get('evidencias') ? data.get('evidencias').split(',').map((item) => item.trim()).filter(Boolean) : [],
+        };
+
+        try {
+          await api.crearTicket(payload);
+          form.reset();
+          formWrapper.hidden = true;
+          await cargarTickets();
+        } catch (error) {
+          alert(error.message || 'No se pudo crear el ticket');
+        }
+      });
+
+      await cargarCatalogo();
+      await cargarTickets();
+    </script>
+  </body>
+</html>

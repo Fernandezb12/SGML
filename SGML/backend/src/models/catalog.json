@@ -1,0 +1,75 @@
+{
+  "sedes": [
+    {
+      "id": "sede-neiva",
+      "nombre": "Neiva - Sede Central",
+      "bloques": [
+        { "id": "bloque-a", "nombre": "Bloque A" },
+        { "id": "bloque-b", "nombre": "Bloque B" },
+        { "id": "bloque-lab", "nombre": "Laboratorios" }
+      ]
+    },
+    {
+      "id": "sede-pitalito",
+      "nombre": "Pitalito",
+      "bloques": [
+        { "id": "bloque-1", "nombre": "Bloque Administrativo" },
+        { "id": "bloque-2", "nombre": "Bloque Académico" }
+      ]
+    }
+  ],
+  "categorias": [
+    {
+      "id": "aire-acondicionado",
+      "nombre": "Aire acondicionado",
+      "familia": "climatizacion",
+      "checklistBase": [
+        "Verificar filtros",
+        "Revisar niveles de gas",
+        "Confirmar funcionamiento eléctrico"
+      ]
+    },
+    {
+      "id": "red-electrica",
+      "nombre": "Red eléctrica",
+      "familia": "electricidad",
+      "checklistBase": [
+        "Inspección visual",
+        "Pruebas de continuidad",
+        "Verificación de tablero"
+      ]
+    },
+    {
+      "id": "iluminacion",
+      "nombre": "Tomas y luminarias",
+      "familia": "iluminacion",
+      "checklistBase": [
+        "Revisión de luminarias",
+        "Medición de voltaje",
+        "Verificación normativa RETIE"
+      ]
+    }
+  ],
+  "prioridades": [
+    { "id": "critica", "nombre": "Crítica", "tiempoMaximoHoras": 4 },
+    { "id": "alta", "nombre": "Alta", "tiempoMaximoHoras": 12 },
+    { "id": "media", "nombre": "Media", "tiempoMaximoHoras": 48 },
+    { "id": "baja", "nombre": "Baja", "tiempoMaximoHoras": 120 }
+  ],
+  "preventivos": [
+    {
+      "familia": "climatizacion",
+      "frecuencias": [
+        { "actividad": "Limpieza filtros", "periodicidadDias": 90 },
+        { "actividad": "Revisión general", "periodicidadDias": 180 }
+      ]
+    },
+    {
+      "familia": "electricidad",
+      "frecuencias": [
+        { "actividad": "Inspección termográfica", "periodicidadDias": 90 },
+        { "actividad": "Pruebas de aislamiento", "periodicidadDias": 180 }
+      ]
+    }
+  ]
+}
